@@ -12,7 +12,7 @@ const Navbar = () => {
     { name: 'Assessment', href: '/assessment' },
     { name: 'Dashboard', href: '/dashboard' },
     { name: 'Resources', href: '/resources' },
-    { name: 'Pricing', href: '/pricing' }
+    { name: 'Pricing', href: '/pricing' },
   ];
 
   const isActive = (href: string) => location.pathname === href;
@@ -32,7 +32,7 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className=" md:flex items-center space-x-8">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -46,8 +46,8 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
-            <Button variant="secondary" size="sm" className="ml-4">
-              Get Started
+            <Button variant="secondary" size="sm" className="ml-4" asChild>
+              <Link to="/login">Get Started</Link>
             </Button>
           </div>
 
@@ -83,8 +83,8 @@ const Navbar = () => {
                 </Link>
               ))}
               <div className="px-3 py-2">
-                <Button variant="secondary" className="w-full">
-                  Get Started
+                <Button variant="secondary" className="w-full" asChild>
+                  <Link to="/login">Get Started</Link>
                 </Button>
               </div>
             </div>
