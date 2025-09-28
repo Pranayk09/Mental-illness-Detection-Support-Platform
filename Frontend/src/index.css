@@ -1,0 +1,234 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Mental Health & Wellness Design System
+All colors MUST be HSL for proper theme integration
+*/
+
+@layer base {
+  :root {
+    /* Base colors - soft and calming */
+    --background: 250 100% 98%;
+    --foreground: 210 15% 20%;
+
+    /* Card components */
+    --card: 0 0% 100%;
+    --card-foreground: 210 15% 20%;
+
+    /* Popover components */
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 15% 20%;
+
+    /* Primary brand - calming blue */
+    --primary: 200 100% 85%;
+    --primary-foreground: 210 25% 15%;
+    --primary-soft: 200 100% 92%;
+    --primary-deep: 200 80% 70%;
+
+    /* Secondary - soft lavender */
+    --secondary: 270 100% 95%;
+    --secondary-foreground: 270 15% 25%;
+    --secondary-soft: 270 100% 98%;
+    --secondary-deep: 270 60% 85%;
+
+    /* Accent - gentle mint */
+    --accent: 160 60% 92%;
+    --accent-foreground: 160 25% 20%;
+
+    /* Muted tones */
+    --muted: 220 20% 96%;
+    --muted-foreground: 220 10% 45%;
+
+    /* Status colors - calming variants */
+    --success: 140 50% 85%;
+    --success-foreground: 140 60% 15%;
+    --warning: 45 85% 88%;
+    --warning-foreground: 45 60% 20%;
+    --destructive: 0 50% 88%;
+    --destructive-foreground: 0 60% 25%;
+
+    /* UI elements */
+    --border: 220 25% 90%;
+    --input: 220 25% 90%;
+    --ring: 200 100% 75%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary-soft)), hsl(var(--primary)));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary-soft)), hsl(var(--secondary)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary-soft)), hsl(var(--secondary-soft)));
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(var(--muted)));
+
+    /* Shadows - soft and calming */
+    --shadow-soft: 0 2px 8px -2px hsl(var(--primary) / 0.1);
+    --shadow-medium: 0 4px 20px -4px hsl(var(--primary) / 0.15);
+    --shadow-large: 0 8px 40px -8px hsl(var(--primary) / 0.2);
+
+    /* Border radius */
+    --radius: 1rem;
+    --radius-large: 1.5rem;
+
+    /* Sidebar (if needed) */
+    --sidebar-background: 250 100% 99%;
+    --sidebar-foreground: 210 15% 25%;
+    --sidebar-primary: 200 100% 85%;
+    --sidebar-primary-foreground: 210 25% 15%;
+    --sidebar-accent: 270 100% 95%;
+    --sidebar-accent-foreground: 270 15% 25%;
+    --sidebar-border: 220 25% 90%;
+    --sidebar-ring: 200 100% 75%;
+  }
+
+  .dark {
+    /* Dark mode with calming tones */
+    --background: 220 25% 8%;
+    --foreground: 220 20% 85%;
+
+    --card: 220 25% 10%;
+    --card-foreground: 220 20% 85%;
+
+    --popover: 220 25% 10%;
+    --popover-foreground: 220 20% 85%;
+
+    --primary: 200 80% 75%;
+    --primary-foreground: 220 25% 10%;
+    --primary-soft: 200 60% 85%;
+    --primary-deep: 200 80% 65%;
+
+    --secondary: 270 40% 20%;
+    --secondary-foreground: 270 20% 85%;
+    --secondary-soft: 270 40% 25%;
+    --secondary-deep: 270 50% 30%;
+
+    --accent: 160 30% 20%;
+    --accent-foreground: 160 20% 85%;
+
+    --muted: 220 25% 15%;
+    --muted-foreground: 220 15% 60%;
+
+    --success: 140 40% 25%;
+    --success-foreground: 140 30% 85%;
+    --warning: 45 60% 30%;
+    --warning-foreground: 45 30% 85%;
+    --destructive: 0 40% 25%;
+    --destructive-foreground: 0 30% 85%;
+
+    --border: 220 25% 20%;
+    --input: 220 25% 20%;
+    --ring: 200 80% 70%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary-deep)), hsl(var(--primary)));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary-deep)), hsl(var(--secondary)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary-deep)), hsl(var(--secondary-deep)));
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(var(--muted)));
+
+    --shadow-soft: 0 2px 8px -2px hsl(0 0% 0% / 0.3);
+    --shadow-medium: 0 4px 20px -4px hsl(0 0% 0% / 0.4);
+    --shadow-large: 0 8px 40px -8px hsl(0 0% 0% / 0.5);
+
+    --sidebar-background: 220 25% 10%;
+    --sidebar-foreground: 220 20% 80%;
+    --sidebar-primary: 200 80% 70%;
+    --sidebar-primary-foreground: 220 25% 10%;
+    --sidebar-accent: 270 40% 18%;
+    --sidebar-accent-foreground: 270 20% 80%;
+    --sidebar-border: 220 25% 18%;
+    --sidebar-ring: 200 80% 70%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-poppins;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-medium;
+  }
+}
+
+@layer components {
+  /* Hero section styles */
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+
+  .card-gradient {
+    background: var(--gradient-card);
+  }
+
+  /* Soft shadows */
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-gentle {
+    box-shadow: var(--shadow-medium);
+  }
+
+  .shadow-calm {
+    box-shadow: var(--shadow-large);
+  }
+
+  /* Animations for wellness app */
+  .fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  .slide-up {
+    animation: slideUp 0.8s ease-out;
+  }
+
+  .gentle-bounce {
+    animation: gentleBounce 2s ease-in-out infinite;
+  }
+
+  .breathing {
+    animation: breathe 4s ease-in-out infinite;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gentleBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
