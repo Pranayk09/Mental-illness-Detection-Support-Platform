@@ -4,14 +4,14 @@ import HomePage from "./pages/Home/HomePage";
 
 import DashBoardPage from "./pages/DashBoard/DashBoardPage";
 import { ToastContainer } from "react-toastify";
-import Navbar from "./components/common/navbar";
+
 import Footer from "./components/common/Footer";
 import { AppContext } from "./context/AppContext";
 import LoginModal from "./pages/AuthPages/LoginPage";
 import Resource from "./pages/blogResources/Resource";
 import Pricing from "./pages/Pricing/Pricing";
 import { useContext } from "react";
-import Assessment from "./pages/Assessment/Assessment";
+import Navbar from "./components/common/Navbar";
 
 
 function App() {
