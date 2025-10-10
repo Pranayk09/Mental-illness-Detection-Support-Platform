@@ -2,6 +2,10 @@ import React, { useEffect, useState, FormEvent } from "react";
 // import {assets} from ''
 import axios from "axios";
 import { toast } from "react-toastify";
+import usericon from '../assets/user_icon.webp';
+import crossicon from '../assets/cross_icon.svg'
+import emailicon from  '../assets/email_icon.svg';
+import lock from '../assets/lock_icon.svg'
 
 const Login: React.FC = () => {
   const [state, setState] = useState<"Login" | "Sign Up">("Login");
@@ -17,12 +21,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     try {
       if (state === "Login") {
-        const { data } = await axios.post<{
-          success: boolean;
-          token?: string;
-          user?: any;
-          message?: string;
-        }>(`${backendUrl}/api/user/login`, { email, password });
+        const { data } = await axios.post(`${backendUrl}/api/user/login`, { email, password });
 
         if (data.success && data.token) {
           localStorage.setItem("token", data.token);
@@ -31,12 +30,7 @@ const Login: React.FC = () => {
           toast.error(data.message || "Login failed");
         }
       } else {
-        const { data } = await axios.post<{
-          success: boolean;
-          token?: string;
-          user?: any;
-          message?: string;
-        }>(`${backendUrl}/api/user/register`, { name, email, password });
+        const { data } = await axios.post(`${backendUrl}/api/user/register`, { name, email, password });
 
         if (data.success && data.token) {
           localStorage.setItem("token", data.token);
@@ -70,7 +64,7 @@ const Login: React.FC = () => {
 
         {state !== "Login" && (
           <div className="border px-6 py-2 flex items-center gap-2 rounded-full mt-4">
-            {/* <img src={assets.user_icon} width={20} className="opacity-65" alt="" /> */}
+             <img src={usericon} width={20} className="opacity-65" alt="" />
             <input
               onChange={(e) => setName(e.target.value)}
               value={name}
@@ -83,7 +77,7 @@ const Login: React.FC = () => {
         )}
 
         <div className="border px-6 py-2 flex items-center gap-2 rounded-full mt-5">
-          {/* <img src={assets.email_icon} alt="" /> */}
+          <img src={emailicon} alt="" />
           <input
             onChange={(e) => setEmail(e.target.value)}
             value={email}
@@ -95,7 +89,7 @@ const Login: React.FC = () => {
         </div>
 
         <div className="border px-6 py-2 flex items-center gap-2 rounded-full mt-4">
-          {/* <img src={assets.lock_icon} alt="" /> */}
+          <img src={lock} alt="" />
           <input
             onChange={(e) => setPassword(e.target.value)}
             value={password}
@@ -136,7 +130,8 @@ const Login: React.FC = () => {
         )}
 
         <img
-        //   src={assets.cross_icon}
+          src={crossicon}
+          
           alt=""
           className="absolute top-5 right-5 cursor-pointer"
         />

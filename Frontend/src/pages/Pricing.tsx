@@ -107,9 +107,6 @@ const Pricing = () => {
       {/* Hero Section */}
       <section className="bg-gradient-hero py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Badge variant="secondary" className="mb-4">
-            Simple, Transparent Pricing
-          </Badge>
           <h1 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
             Choose Your 
             <span className="text-primary-deep"> Wellness Journey</span>
@@ -118,7 +115,7 @@ const Pricing = () => {
             Start free and upgrade when you're ready for advanced features. 
             No hidden fees, cancel anytime.
           </p>
-          <div className="flex items-center justify-center space-x-6 text-sm text-muted-foreground">
+          {/* <div className="flex items-center justify-center space-x-6 text-sm text-muted-foreground">
             <div className="flex items-center space-x-2">
               <Shield className="h-4 w-4" />
               <span>HIPAA Compliant</span>
@@ -131,7 +128,7 @@ const Pricing = () => {
               <Users className="h-4 w-4" />
               <span>10K+ Users</span>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
 

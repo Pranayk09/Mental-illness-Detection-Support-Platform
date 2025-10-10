@@ -100,7 +100,12 @@ const Assessment = () => {
     try {
       const answerArray = allQuestions.map(q => Number(answers[q.id] ?? 0));
       console.log(answerArray)
-      const response = await axios.post('https://example.com/api/predict', { answers: answerArray });
+    const response = await axios.post(
+  'http://localhost:5000/api/test/assessment',
+  { answers: answerArray },
+  { withCredentials: true } // ✅ important for cookies
+);
+
       setResult(response.data);
       setShowResults(true);
     } catch (error) {

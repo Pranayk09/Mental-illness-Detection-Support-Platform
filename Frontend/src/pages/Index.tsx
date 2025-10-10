@@ -81,9 +81,6 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="fade-in">
-              <Badge variant="secondary" className="mb-4">
-                Mental Health & Wellness Platform
-              </Badge>
               <h1 className="text-4xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
                 Your Journey to 
                 <span className="text-primary-deep"> Better Mental Health</span>
@@ -191,9 +188,6 @@ const Index = () => {
               />
             </div>
             <div className="order-1 lg:order-2">
-              <Badge variant="secondary" className="mb-4">
-                Personalized Dashboard
-              </Badge>
               <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-6">
                 Track Your Progress with 
                 <span className="text-primary-deep"> Beautiful Insights</span>
