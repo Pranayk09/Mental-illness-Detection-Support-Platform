@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Menu, X, Heart } from "lucide-react";
 import { AppContext } from "../../context/AppContext";
@@ -18,7 +18,7 @@ const Navbar = () => {
   ];
 
   const isActive = (href) => location.pathname === href;
-
+  
   return (
     <nav className="bg-white/70 backdrop-blur-lg border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,13 +46,12 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
-
+            
             {user ? (
               <div className="flex items-center gap-4">
-                <p className="text-gray-600">Hi, {user.name}</p>
                 <button
                   onClick={logOut}
-                  className="text-sm text-red-500 hover:underline"
+                  className="text-sm bg-red-500 p-3 py-2 rounded-md text-white  hover:bg-red-600"
                 >
                   Logout
                 </button>
@@ -100,7 +99,6 @@ const Navbar = () => {
 
             {user ? (
               <>
-                <p className="px-3 text-gray-700">Hi, {user.name}</p>
                 <button
                   onClick={logOut}
                   className="block w-full text-center px-4 py-2 bg-red-500 text-white rounded-md text-sm font-medium hover:bg-red-600 transition"
