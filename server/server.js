@@ -5,21 +5,26 @@ import cookieParser from 'cookie-parser';
 import connectDB from './config/db.js';
 import userRouter from './Router/userRouter.js';
 import assessmentRouter from './Router/assessmentRouter.js';
+import paymentRouter from './Router/paymentRouter.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
 connectDB(); // database connection
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-   origin: true,  
-  credentials: true
-}))
+
+app.use(
+  cors({
+    origin: 'http://localhost:5173', // <-- your frontend URL (change if needed)
+    credentials: true, // <-- allows cookies to be sent/received
+  })
+);
 
 // API End points
 
 app.use('/api/user', userRouter);
 app.use('/api/test', assessmentRouter);
+app.use('/api/payment', paymentRouter)
 
 app.get('/', (req,res)=>{
   res.send("Server is Working");

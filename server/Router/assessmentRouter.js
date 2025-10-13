@@ -4,6 +4,6 @@ import userAuth from '../Middleware/userAuth.js';
 
 const assessmentRouter = express.Router();
 
-assessmentRouter.post('/assessment', userAuth ,submitAssessment);
+assessmentRouter.post('/assessment' ,submitAssessment);
 
 export default assessmentRouter;

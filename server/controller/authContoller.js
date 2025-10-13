@@ -54,7 +54,7 @@ export const register = async(req,res)=>{
 
 export const login = async(req,res)=>{
     const {email, password} = req.body;
-
+    
     if(!email || !password){
       return res.json({success: false, message: 'Email and password are required'});
     }
@@ -71,6 +71,8 @@ export const login = async(req,res)=>{
         if(!isMatch){
             return res.json({success: false, message: "Invalid Password"});
         }
+
+       
         
     const token = jwt.sign({id: user._id}, process.env.JWT_SECRET,{expiresIn: '7d'} );
      res.cookie('token', token, {
@@ -79,6 +81,7 @@ export const login = async(req,res)=>{
         sameSite:process.env.NODE_ENV === 'production' ? 'none' : 'strict',
         maxAge: 7 * 24 * 60* 60 * 1000
     });
+    //    console.log("Logged in");
 
      res.json({success:true, userData: user, token, message: "Logged in successfully"});
 

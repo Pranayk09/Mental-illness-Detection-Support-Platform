@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { ProgressHeader } from './ProgressHeader';
 import { QuestionCard } from './QuestionCard';
 import { ResultView } from './ResultView';
+import { AppContext } from '../../context/AppContext';
+import {toast} from 'react-toastify'
+import { useNavigate } from 'react-router-dom';
 
 // ---------------------- QUESTIONS -----------------------
 const demographicQuestions = [
@@ -91,6 +94,10 @@ export const Assessment = () => {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const {user,logIn} = useContext(AppContext);
+
+  const navigate = useNavigate();
+
   const currentQ = allQuestions[currentQuestion];
   const progress = ((currentQuestion + 1) / allQuestions.length) * 100;
   const isAnswered = answers[currentQ.id] !== undefined && answers[currentQ.id] !== '';
@@ -115,7 +122,14 @@ export const Assessment = () => {
     setLoading(true);
     try {
       const answerArray = allQuestions.map((q) => Number(answers[q.id] ?? 0));
-      console.log(answerArray)
+      // console.log(answerArray)
+
+      if(!user){
+        toast.error("Account is not Authenticated ! Log in again.");
+        logIn(); 
+        return;
+      }
+
       const response = await axios.post(
         'http://localhost:5000/api/test/assessment',
         { answers: answerArray },
@@ -124,7 +138,7 @@ export const Assessment = () => {
       setResult(response.data);
       setShowResults(true);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       alert('Failed to submit answers. Please try again.');
     } finally {
       setLoading(false);
@@ -132,7 +146,15 @@ export const Assessment = () => {
   };
 
   if (showResults)
-    return <ResultView result={result} />;
+    return <ResultView result={result} 
+    onRetake={() => {
+        setShowResults(false);
+        setAnswers({});
+        setCurrentQuestion(0);
+        setResult(null);
+      }}
+    
+    />;
 
   return (
     <div className="min-h-screen py-12 bg-gradient-hero">

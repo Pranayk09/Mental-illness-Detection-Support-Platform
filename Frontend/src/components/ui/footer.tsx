@@ -130,7 +130,7 @@ const Footer = () => {
             © 2024 MindCare. All rights reserved.
           </p>
           <p className="text-muted-foreground text-sm mt-2 md:mt-0">
-            Made with ❤️ for better mental health
+             Connect with us for better mental health !
           </p>
         </div>
       </div>
