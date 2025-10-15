@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 export const QuestionCard = ({
@@ -12,6 +12,18 @@ export const QuestionCard = ({
   isAnswered,
   loading,
 }) => {
+  // Handle "Enter" key to go to the next question
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === "Enter" && isAnswered) {
+        e.preventDefault();
+        onNext();
+      }
+    };
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, [isAnswered, onNext]);
+
   return (
     <div className="bg-white rounded-2xl shadow-md p-8 border border-gray-200">
       <div className="text-center mb-6">
@@ -19,7 +31,6 @@ export const QuestionCard = ({
         <h3 className="text-lg text-gray-700">{question.text}</h3>
       </div>
 
-      {/* Number input */}
       {question.type === "number" && (
         <input
           type="number"
@@ -30,7 +41,6 @@ export const QuestionCard = ({
         />
       )}
 
-      {/* Select input */}
       {question.type === "select" && (
         <select
           value={answer ?? ""}
@@ -46,7 +56,6 @@ export const QuestionCard = ({
         </select>
       )}
 
-      {/* Radio input */}
       {question.type === "radio" && (
         <div className="space-y-3 mt-4">
           {question.options?.map((opt) => (
@@ -54,7 +63,9 @@ export const QuestionCard = ({
               key={opt.value}
               htmlFor={`${question.id}-${opt.value}`}
               className={`flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50 transition ${
-                answer === opt.value ? "border-green-400 bg-green-50" : "border-gray-300"
+                answer === opt.value
+                  ? "border-green-400 bg-green-50"
+                  : "border-gray-300"
               }`}
             >
               <input
@@ -91,8 +102,8 @@ export const QuestionCard = ({
           disabled={!isAnswered}
           className={`flex items-center px-5 py-2 rounded-lg text-white transition ${
             !isAnswered
-              ? " bg-purple-400 text-white rounded-md text-sm font-medium hover:bg-purple-700 transition cursor-not-allowed"
-              : " bg-purple-600 text-white rounded-md text-sm font-medium hover:bg-purple-700 transition"
+              ? "bg-purple-400 text-white rounded-md text-sm font-medium hover:bg-purple-700 transition cursor-not-allowed"
+              : "bg-purple-600 text-white rounded-md text-sm font-medium hover:bg-purple-700 transition"
           }`}
         >
           {isLast ? (loading ? "Submitting..." : "Finish") : "Next"}

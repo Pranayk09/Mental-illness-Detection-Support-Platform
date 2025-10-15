@@ -1,4 +1,4 @@
-import React from "react";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/Home/HomePage";
 
@@ -12,7 +12,7 @@ import Resource from "./pages/blogResources/Resource";
 import Pricing from "./pages/Pricing/Pricing";
 import { useContext } from "react";
 import Navbar from "./components/common/Navbar";
-import Assessment from "./pages/Assessment/Assessment"
+import Assessment from "./pages/Assessment/Assessment";
 
 
 function App() {

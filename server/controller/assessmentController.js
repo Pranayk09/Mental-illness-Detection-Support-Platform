@@ -1,4 +1,5 @@
 import assessmentModel from "../models/assessmentModel.js";
+import jwt from 'jsonwebtoken'
 
 import axios from 'axios'
 
@@ -6,7 +7,17 @@ import axios from 'axios'
 export const submitAssessment = async(req,res)=>{
     
     try { 
-         const userId = req.userId; 
+    const token = req.cookies.token;
+    console.log(req.cookies);
+    if (!token) {
+      return res.json({ success: false, message: "No token found in cookies" });
+    }
+    
+
+    // ✅ Decode the token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.id;
+
         const {answers} = req.body;
          if(!userId || !answers) {  
           return res.json({success: false, message:"Missing Details" });
