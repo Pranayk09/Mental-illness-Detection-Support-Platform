@@ -4,7 +4,7 @@ export default function ProgressBar({ day, totalDays, completed, totalTasks }) {
   const progress = (completed / totalTasks) * 100;
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center mt-10">
       <motion.div
         className="relative w-36 h-36 rounded-full flex items-center justify-center bg-gradient-to-br from-indigo-200 to-indigo-400 shadow-md"
         initial={{ rotate: 0 }}

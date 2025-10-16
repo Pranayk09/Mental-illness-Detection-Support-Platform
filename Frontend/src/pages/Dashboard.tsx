@@ -185,7 +185,7 @@ const Dashboard = () => {
         {/* Charts */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {/* Weekly Progress */}
-          {/* <Card className="card-gradient shadow-gentle">
+          <Card className="card-gradient shadow-gentle">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <BarChart className="h-5 w-5" />
@@ -203,10 +203,10 @@ const Dashboard = () => {
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
-          </Card>  */}
+          </Card> 
 
           {/* Monthly Trend */}
-          {/* <Card className="card-gradient shadow-gentle">
+          <Card className="card-gradient shadow-gentle">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5" />
@@ -228,7 +228,7 @@ const Dashboard = () => {
                 </LineChart>
               </ResponsiveContainer>
             </CardContent>
-          </Card> */}
+          </Card>
         </div>
 
         {/* Activity Breakdown and Today's Tasks */}

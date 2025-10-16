@@ -1,13 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { ProgressHeader } from './ProgressHeader';
 import { QuestionCard } from './QuestionCard';
 import { ResultView } from './ResultView';
 import { AppContext } from '../../context/AppContext';
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
-// ---------------------- QUESTIONS -----------------------
 const demographicQuestions = [
   { id: 1, text: 'Age', type: 'number' },
   { id: 2, text: 'Gender', type: 'radio', options: [{ label: 'Male', value: 1 }, { label: 'Female', value: 2 }] },
@@ -86,17 +85,45 @@ const dassQuestions = [
 
 const allQuestions = [...demographicQuestions, ...dassQuestions];
 
-// ---------------------- COMPONENT -----------------------
 export const Assessment = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [hasCompletedAssessment, setHasCompletedAssessment] = useState(false);
+  const [checkingStatus, setCheckingStatus] = useState(true); // ✅ For initial check
 
-  const {user,logIn} = useContext(AppContext);
-
+  const { user, logIn } = useContext(AppContext);
   const navigate = useNavigate();
+
+  // ✅ Check if user already completed test before starting
+  useEffect(() => {
+    const checkAssessmentStatus = async () => {
+      try {
+        if (!user) {
+          toast.error('Account not authenticated! Please log in again.', { toastId: 'auth-error' });
+          logIn();
+          return;
+        }
+
+        const res = await axios.get('http://localhost:5000/api/test/status', { withCredentials: true });
+
+        if (res.data.completed) {
+          setHasCompletedAssessment(true);
+          toast.info('You have already completed the assessment. Please complete your 10-day plan before retaking the test.', { toastId: 'already-completed' });
+          navigate('/dashboard'); // 👈 Redirect wherever you want
+        }
+      } catch (err) {
+        console.error(err);
+        toast.error('Error checking assessment status.', { toastId: 'check-error' });
+      } finally {
+        setCheckingStatus(false);
+      }
+    };
+
+    checkAssessmentStatus();
+  }, [user, logIn, navigate]);
 
   const currentQ = allQuestions[currentQuestion];
   const progress = ((currentQuestion + 1) / allQuestions.length) * 100;
@@ -122,49 +149,63 @@ export const Assessment = () => {
     setLoading(true);
     try {
       const answerArray = allQuestions.map((q) => Number(answers[q.id] ?? 0));
-      // console.log(answerArray)
-
-      if(!user){
-        toast.error("Account is not Authenticated ! Log in again.");
-        logIn(); 
-        return;
-      }
 
       const response = await axios.post(
         'http://localhost:5000/api/test/assessment',
         { answers: answerArray },
         { withCredentials: true }
       );
-      setResult(response.data);
-      setShowResults(true);
+
+      if (response.data.success) {
+        toast.success(response.data.message, { toastId: 'assessment-success' });
+        setResult(response.data);
+        setShowResults(true);
+      } else {
+        toast.error(response.data.message, { toastId: 'assessment-exists' });
+      }
     } catch (error) {
-      // console.error(error);
-      alert('Failed to submit answers. Please try again.');
+      toast.error('Failed to submit answers. Please try again.', { toastId: 'submit-error' });
     } finally {
       setLoading(false);
     }
   };
 
+  // ✅ Show loading until check completes
+  if (checkingStatus) {
+    return (
+      <div className="flex justify-center items-center h-screen text-lg font-semibold">
+        Checking assessment status...
+      </div>
+    );
+  }
+
   if (showResults)
-    return <ResultView result={result} 
-    onRetake={() => {
-        setShowResults(false);
-        setAnswers({});
-        setCurrentQuestion(0);
-        setResult(null);
-      }}
-    
-    />;
+    return (
+      <ResultView
+        result={result}
+        onRetake={() => {
+          setShowResults(false);
+          setAnswers({});
+          setCurrentQuestion(0);
+          setResult(null);
+        }}
+      />
+    );
+
+  if (hasCompletedAssessment) {
+    return (
+      <div className="flex justify-center items-center h-screen text-center px-6">
+        <p className="text-xl font-medium text-gray-700">
+          You have already completed the assessment. Please complete your 10-day plan before retaking the test.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen py-12 bg-gradient-hero">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ProgressHeader
-          progress={progress}
-          step={currentQuestion + 1}
-          total={allQuestions.length}
-        />
-
+        <ProgressHeader progress={progress} step={currentQuestion + 1} total={allQuestions.length} />
         <QuestionCard
           question={currentQ}
           answer={answers[currentQ.id]}

@@ -6,6 +6,7 @@ import connectDB from './config/db.js';
 import userRouter from './Router/userRouter.js';
 import assessmentRouter from './Router/assessmentRouter.js';
 import paymentRouter from './Router/paymentRouter.js';
+import taskRouter from './Router/taskRoutes.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -25,6 +26,8 @@ app.use(
 app.use('/api/user', userRouter);
 app.use('/api/test', assessmentRouter);
 app.use('/api/payment', paymentRouter)
+app.use('/api/dashboard', taskRouter)
+
 
 app.get('/', (req,res)=>{
   res.send("Server is Working");
