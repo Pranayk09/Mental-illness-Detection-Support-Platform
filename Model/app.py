@@ -17,7 +17,7 @@ def map_severity(score, cutoffs):
             return label
     return 'Unknown'
 
-# Order of features corresponding to answers array
+
 features_order = [
     'Q1_1','Q3_1_S1','Q3_2_S2','Q3_3_S3','Q3_4_S4','Q3_5_S5','Q3_6_S6','Q3_7_S7',
     'Q3_8_A1','Q3_9_A2','Q3_10_A3','Q3_11_A4','Q3_12_A5','Q3_13_A6','Q3_14_A7',
@@ -25,7 +25,7 @@ features_order = [
     'Gender','Marital_Status','Education','Occupation','Sleep_Problem'
 ]
 
-# Flask app
+
 app = Flask(__name__)
 
 @app.route("/predict", methods=["POST"])
@@ -37,13 +37,13 @@ def predict():
     if not answers or len(answers) != len(features_order):
         return jsonify({"error": f"Answers must have {len(features_order)} elements"}), 400
     
-    # Create single-row DataFrame
+   
     row = pd.DataFrame([answers], columns=features_order)
     
-    # Add Age_Normalized
+
     row['Age_Normalized'] = (row['Q1_1'] - row['Q1_1'].min()) / (row['Q1_1'].max() - row['Q1_1'].min())
     
-    # Predict
+   
     pred_encoded = model.predict(row)[0]
     pred_status = le.inverse_transform([pred_encoded])[0]
     
