@@ -128,6 +128,7 @@ export const markTaskComplete = async (req, res) => {
 export const getUserDetails = async (req, res) => {
   try {
     const token = req.cookies?.token || req.headers?.token;
+   
     if (!token) {
       return res.json({ success: false, message: "No token found in cookies" });
     }

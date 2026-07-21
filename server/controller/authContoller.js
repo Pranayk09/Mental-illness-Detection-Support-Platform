@@ -184,6 +184,8 @@ export const isAuthenticated = async(req,res)=>{
 }
 
 
+
+
 // send password reset OTP
 export const sendResetOTP = async(req,res)=>{
     const {email} = req.body
