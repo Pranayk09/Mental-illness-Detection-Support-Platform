@@ -70,7 +70,24 @@ The application combines a modern MERN stack web application with a Flask-based 
 
 ---
 
-## Machine Learning Model
+## Project Structure
+
+```
+Mental-Illness-Detection-Support-Platform/
+│
+├── client/          # React Frontend
+├── server/          # Express.js Backend
+├── model/           # Machine Learning Service
+│   ├── app.py
+│   ├── model.ipynb
+│   ├── DASS.csv
+│   ├── dass_xgb_pipeline.joblib
+│   └── label_encoder.joblib
+│
+└── README.md
+```
+
+> **Note:** The `client` directory contains the React frontend application. The `server` directory contains the Express.js backend, and the `model` directory contains the Flask-based Machine Learning service, trained model, and dataset.
 
 The prediction system is built using an **XGBoost Classifier** trained on the **DASS-21 dataset**.
 
@@ -126,9 +143,7 @@ cd Mental-illness-Detection-Support-Platform
 
 ```bash
 cd server
-
 npm install
-
 npm start
 ```
 
@@ -136,9 +151,7 @@ npm start
 
 ```bash
 cd client
-
 npm install
-
 npm start
 ```
 
@@ -146,13 +159,10 @@ npm start
 
 ```bash
 cd model
-
 pip install -r requirements.txt
-
 python app.py
 ```
 
----
 
 ## Team Contribution
 
