@@ -95,40 +95,6 @@ The trained model is exported as a Joblib pipeline and served through a Flask AP
 
 ---
 
-## Project Structure
-
-```text
-Mental-Illness-Detection-Support-Platform/
-│
-├── client/                 # React Frontend
-│
-├── server/                 # Express.js Backend
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   ├── config/
-│   ├── utils/
-│   ├── app.js
-│   └── server.js
-│
-├── model/                  # Machine Learning Service
-│   ├── app.py
-│   ├── model.ipynb
-│   ├── DASS.csv
-│   ├── dass_xgb_pipeline.joblib
-│   └── label_encoder.joblib
-│
-└── README.md
-```
-
-> **Note:**  
-> - **client** contains the React frontend application.
-> - **server** contains the Express.js REST API and authentication system.
-> - **model** contains the Flask Machine Learning API, trained XGBoost model, and dataset.
-
----
-
 ## Installation
 
 ### Clone Repository
