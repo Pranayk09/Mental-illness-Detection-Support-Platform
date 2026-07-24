@@ -70,10 +70,12 @@ export const verifyPayment = async (req, res) => {
     payment.status = status;
     await payment.save();
 
-    // Update user plan
+    // Update user plan & expiration date
     const user = await userModel.findById(userId);
     if (user) {
-      user.plan = payment.plan; // set user plan to purchased plan
+      user.plan = payment.plan || "Premium";
+      const durationDays = (payment.plan === "Pro") ? 365 : 30;
+      user.planExpiresAt = new Date(Date.now() + durationDays * 24 * 60 * 60 * 1000);
       await user.save();
     }
 

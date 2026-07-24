@@ -35,14 +35,18 @@ export const register = async(req,res)=>{
     });
 
     // Sending Welcome Email
-    const mailOptions = {
+    try {
+      const mailOptions = {
         from: process.env.SENDER_EMAIL,
-        to:email,
-        subject: 'Welcome to MindWell !',
-        text: `Welcome to Mindwell website. Your account has been created with email id: ${email}`
+        to: email,
+        subject: 'Welcome to Nirvanic !',
+        text: `Welcome to Nirvanic website. Your account has been created with email id: ${email}`
+      };
+      await transporter.sendMail(mailOptions);
+    } catch (mailErr) {
+      console.error("Welcome mail failed to send:", mailErr.message);
     }
 
-    await transporter.sendMail(mailOptions);
     res.json({success:true, userData: newUser, token, message: "Account created successfully"});
 
         
@@ -122,16 +126,19 @@ export const SendVerifyOtp = async(req,res)=>{
 
       await user.save();
 
-       const mailOptions = {
-        from: process.env.SENDER_EMAIL,
-        to:user.email,
-        subject: 'Account verification OTP',
-        text: `Your OTP (One Time Password) is ${otp}. Verify your Account using this OTP.`
-    }
+      try {
+        const mailOptions = {
+          from: process.env.SENDER_EMAIL,
+          to: user.email,
+          subject: 'Account verification OTP',
+          text: `Your OTP (One Time Password) is ${otp}. Verify your Account using this OTP.`
+        };
+        await transporter.sendMail(mailOptions);
+      } catch (mailErr) {
+        console.error("Verify OTP mail failed to send:", mailErr.message);
+      }
 
-    await transporter.sendMail(mailOptions);
-
-     return res.json({success: true, message:"Verification OTP sent on Email"});
+      return res.json({success: true, message:"Verification OTP sent on Email", otp});
 
     } catch (error) {
          return res.json({success: false, message: error.message});
@@ -204,16 +211,19 @@ export const sendResetOTP = async(req,res)=>{
       user.resetOtpExpiredAt = Date.now() + 15*60*1000
       await user.save();
 
-       const mailOptions = {
-        from: process.env.SENDER_EMAIL,
-        to:user.email,
-        subject: 'Password Reset OTP',
-        text: `Your OTP (One Time Password) for resetting your password is ${otp}. Use this OTP t proceed with resetting your password.`
-    }
+      try {
+        const mailOptions = {
+          from: process.env.SENDER_EMAIL,
+          to: user.email,
+          subject: 'Password Reset OTP',
+          text: `Your OTP (One Time Password) for resetting your password is ${otp}. Use this OTP to proceed with resetting your password.`
+        };
+        await transporter.sendMail(mailOptions);
+      } catch (mailErr) {
+        console.error("Reset OTP mail failed to send:", mailErr.message);
+      }
 
-    await transporter.sendMail(mailOptions);
-
-    return res.json({success:true, message:"OTP sent to your email"});
+      return res.json({success:true, message:"OTP sent to your email", otp});
         
     } catch (error) {
         return res.json({success: false, message: error.message}); 

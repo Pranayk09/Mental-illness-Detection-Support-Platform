@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Mail, MapPin, Phone } from 'lucide-react';
+import { motion } from "framer-motion";
 
 const Footer = () => {
   return (
@@ -10,12 +11,24 @@ const Footer = () => {
 
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
+            {/* <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-r from-pink-500 to-purple-500 rounded-lg flex items-center justify-center">
                 <Heart className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-semibold text-foreground">Nirvanic</span>
-            </div>
+            </div> */}
+             <Link to="/" className="flex items-center space-x-2.5 group">
+                        <motion.div
+                          whileHover={{ scale: 1.08, rotate: 3 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="w-9 h-9 bg-gradient-to-tr from-emerald-500 via-teal-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-md shadow-emerald-500/20"
+                        >
+                          <Heart className="w-5 h-5 text-white fill-white/20" />
+                        </motion.div>
+                        <span className="text-xl font-extrabold bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-800 bg-clip-text text-transparent">
+                          Nirvanic
+                        </span>
+                      </Link>
             <p className="text-muted-foreground text-sm">
               Empowering your mental wellness journey with personalized insights and gentle guidance.
             </p>
@@ -69,11 +82,11 @@ const Footer = () => {
             <div className="space-y-2">
               <div className="flex items-center space-x-2 text-muted-foreground text-sm">
                 <Mail className="w-4 h-4" />
-                <span>support@mindcare.app</span>
+                <span>support@nirvanic.app</span>
               </div>
               <div className="flex items-center space-x-2 text-muted-foreground text-sm">
                 <Phone className="w-4 h-4" />
-                <span>1-800-MINDCARE</span>
+                <span>1-800-NIRVANIC</span>
               </div>
               <div className="flex items-center space-x-2 text-muted-foreground text-sm">
                 <MapPin className="w-4 h-4" />

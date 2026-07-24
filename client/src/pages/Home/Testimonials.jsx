@@ -7,7 +7,7 @@ const testimonials = [
     role: "Graduate Student",
     rating: 5,
     content:
-      "MindCare helped me understand my anxiety patterns and gave me tools to manage them better. The gentle approach made me feel safe to explore my mental health.",
+      "Nirvanic helped me understand my anxiety patterns and gave me tools to manage them better. The gentle approach made me feel safe to explore my mental health.",
   },
   {
     name: "David L.",

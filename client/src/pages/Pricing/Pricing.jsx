@@ -76,7 +76,7 @@ const Pricing = () => {
     },
     {
       question: "What if I need immediate crisis support?",
-      answer: "MindCare provides resources and connections to crisis support, but we're not a replacement for emergency services. Always call 911 or 988 for immediate crisis intervention."
+      answer: "Nirvanic provides resources and connections to crisis support, but we're not a replacement for emergency services. Always call 911 or 988 for immediate crisis intervention."
     }
   ];
 
@@ -129,7 +129,7 @@ const Pricing = () => {
         <div className="max-w-4xl mx-auto px-4 text-center mb-12">
           <h2 className="text-3xl font-bold mb-2">Frequently Asked Questions</h2>
           <p className="text-gray-600">
-            Everything you need to know about MindCare pricing and features.
+            Everything you need to know about Nirvanic pricing and features.
           </p>
         </div>
         <div className="max-w-3xl mx-auto space-y-6 px-4">
