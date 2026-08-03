@@ -3,7 +3,7 @@ gunicorn
 numpy
 pandas
 joblib
-scipy>=1.16.0
-scikit-learn>=1.7.0
+scipy==1.13.1
+scikit-learn==1.5.1
 xgboost>=3.0.0
 imbalanced-learn
