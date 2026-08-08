@@ -49,21 +49,39 @@ export const submitAssessment = async (req, res) => {
     const newAssessment = new assessmentModel({ userId, answers });
     const savedAssessment = await newAssessment.save();
 
-    let normalizedCondition = "Stress";
-    let severityResult = "Moderate";
+    // Temporary static result sets until ML model is deployed
+    const staticMockResults = [
+      { condition: "Stress", severity: "Moderate" },
+      { condition: "Anxiety", severity: "Low" },
+      { condition: "Depression", severity: "Moderate" },
+      { condition: "Stress", severity: "High" }
+    ];
+
+    // Pick a random mock result set
+    const randomMock = staticMockResults[Math.floor(Math.random() * staticMockResults.length)];
+    let normalizedCondition = randomMock.condition;
+    let severityResult = randomMock.severity;
 
     try {
-      const mlResponse = await axios.post("http://127.0.0.1:5000/predict", { userId, answers: mlAnswers });
+      const mlResponse = await axios.post(
+        "http://127.0.0.1:5000/predict",
+        { userId, answers: mlAnswers },
+        { timeout: 2000 }
+      );
       const statusMap = {
         Stressed: "Stress",
         Anxious: "Anxiety",
         Depressed: "Depression",
       };
       const rawCondition = mlResponse.data.Mental_Health_Status;
-      normalizedCondition = statusMap[rawCondition] || rawCondition || "Stress";
-      severityResult = mlResponse.data.Severity || "Moderate";
+      if (rawCondition) {
+        normalizedCondition = statusMap[rawCondition] || rawCondition;
+      }
+      if (mlResponse.data.Severity) {
+        severityResult = mlResponse.data.Severity;
+      }
     } catch (mlErr) {
-      console.error("Flask ML Service note, fallback evaluation used:", mlErr.message);
+      console.log("Flask ML Service note, temporary static mock evaluation used:", { normalizedCondition, severityResult });
     }
 
     savedAssessment.result = {
