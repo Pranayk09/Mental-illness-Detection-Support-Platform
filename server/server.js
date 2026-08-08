@@ -15,19 +15,10 @@ import { seedResources } from './controller/resourceController.js';
 const app = express();
 const port = process.env.PORT || 4000;
 
-// Connect to DB and auto-seed resources if empty
-connectDB().then(async () => {
-  try {
-    const count = await resourceModel.countDocuments();
-    if (count === 0) {
-      console.log("🌱 Auto-seeding initial Nirvanic resources dataset...");
-      await resourceModel.deleteMany({});
-      // Call mock req, res for seeder
-      await seedResources({ body: {} }, { json: (data) => console.log("✅ Resources seeded:", data.message) });
-    }
-  } catch (err) {
-    console.error("Seeding check note:", err.message);
-  }
+// Connect DB middleware for serverless environment
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
 });
 
 app.use(express.json());
@@ -47,10 +38,16 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin) || origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
-        callback(null, true);
+      if (
+        !origin ||
+        allowedOrigins.includes(origin) ||
+        origin.startsWith('http://localhost:') ||
+        origin.startsWith('http://127.0.0.1:') ||
+        origin.endsWith('.vercel.app')
+      ) {
+        callback(null, origin || true);
       } else {
-        callback(null, true);
+        callback(null, origin);
       }
     },
     credentials: true,
@@ -71,6 +68,10 @@ app.get('/', (req, res) => {
   res.send("Nirvanic Server is Working");
 });
 
-app.listen(port, () => {
-  console.log("Server is listening on port:", port);
-});
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+  app.listen(port, () => {
+    console.log("Server is listening on port:", port);
+  });
+}
+
+export default app;
